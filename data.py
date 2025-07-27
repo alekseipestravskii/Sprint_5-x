@@ -1,7 +1,7 @@
 # Данные зарегистрированного аккаунта для проверок с авторизацией
 class Credentials:
-    email    ='konstantinkazantsev25123@ya.ru'
-    password ='123456'
+    email    ='pan19772012@gmail.com'
+    password ='Ri9-tES-CWm-uwi'
 
 # Текст ссылок в табах конструктора
 class ConstructorTabText:
