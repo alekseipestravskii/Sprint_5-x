@@ -1,30 +1,38 @@
 import pytest
-import requests
+
 from selenium import webdriver
 
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from curl import *
-from data import Credentials
+from data import *
 from locators import Locators
 
 #  Подключаем webdriver для Chrome
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def driver():
-    options = Options()
     browser = webdriver.Chrome()
     browser.maximize_window()
-    browser.get(main_site)
     yield browser
     browser.quit()
+    
 
+@pytest.fixture(scope="function")
+def driver_with_login():
+    browser = webdriver.Chrome()
+    browser.maximize_window()
+    browser.get(account_url)
 
-@pytest.fixture
-def login(driver):
-    """
-    Фикстура для авторизации пользователя.
-    """
-    # Вводим email в поле "Email"
-    driver.find_element(*Locators.EMAIL).send_keys(Credentials.email)
-    driver.find_element(*Locators.PASSWORD).send_keys(Credentials.password)
-    driver.find_element(*Locators.REGISTER_BUTTON).click()
+    # Заходим в аккаунто пользователя
+    WebDriverWait(browser, 5).until(EC.visibility_of_element_located(Locators.LOGIN_BUTTON))
+    
+    browser.find_element(*Locators.LOGIN_EMAIL).send_keys(Credentials.email)
+    browser.find_element(*Locators.LOGIN_PASSWORD).send_keys(Credentials.password)
+    browser.find_element(*Locators.LOGIN_BUTTON).click()
+    WebDriverWait(browser, 5).until(EC.visibility_of_element_located(Locators.ACCOUNT_HEADER_LINK))
+    browser.find_element(*Locators.LOGO_HEADER_LINK).click()
 
-    return driver
+    yield browser
+    
+    browser.quit()
