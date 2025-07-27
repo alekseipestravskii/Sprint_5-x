@@ -2,9 +2,12 @@ import random
 import string
 
 def generate_registration_data():
-    email_length = random(5, 7)
-    email = ''.join(random.choice(string.ascii_lowercase + string.digits, k=email_length)) + '@ya.ru'
+    name_lenght = random.randint(5, 7)
+    name = ''.join(random.choices(string.ascii_lowercase, p=name_lenght) + random.choices(string.digits, p=3))
+
+    email_length = random.randint(5, 7)
+    email = ''.join(random.choices(string.ascii_lowercase + string.digits, k=email_length)) + '@gmail.com'
     
-    password_length = random(6, 8)
-    password = ''.join(random.choice(string.ascii_lowercase + string.digits, k=password_length))
-    return email, password  # Возвращаем кортеж (email, password)
+    password_length = random.randint(6, 8)
+    password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=password_length))
+    return name, email, password  # Возвращаем кортеж (name, email, password)
