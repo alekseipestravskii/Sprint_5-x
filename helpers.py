@@ -1,13 +1,24 @@
 import random
 import string
 
-def generate_registration_data():
-    name_lenght = random.randint(5, 7)
-    name = ''.join(random.choices(string.ascii_lowercase, p=name_lenght) + random.choices(string.digits, p=3))
 
-    email_length = random.randint(5, 7)
-    email = ''.join(random.choices(string.ascii_lowercase + string.digits, k=email_length)) + '@gmail.com'
-    
-    password_length = random.randint(6, 8)
-    password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=password_length))
-    return name, email, password  # Возвращаем кортеж (name, email, password)
+# Генерация email с четырьмя рандомными буквами и рандомным числом от 100 до 999 для регистрации
+def create_random_email():
+    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(4)))
+    random_email = f'pan19772012{random_letters}_{random.randint(100, 999)}@gmail.com'
+    return random_email
+
+
+# Генерация пароля с двумя рандомными буквами и рандомным числом от 10 до 99 для регистрации
+def create_random_password():
+    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(2)))
+    random_password = f'qwerty_{random_letters}_{random.randint(10, 99)}'
+    return random_password
+
+
+# Генерация основы email с четырьмя рандомными буквами и рандомным числом от 100 до 999
+# для негативных проверок на формат вводимого адреса почты
+def create_email_base():
+    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(4)))
+    email_base = f'pan19772012{random_letters}_{random.randint(100, 999)}'
+    return email_base
