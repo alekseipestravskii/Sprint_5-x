@@ -1,24 +1,11 @@
-import random
-import string
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from locators import Locators
+from data import Credentials
 
+def wait_and_fill_login_fields(driver):
+    WebDriverWait(driver, 5).until(EC.visibility_of_element_located(Locators.LOGIN_BUTTON))
 
-# Генерация email с четырьмя рандомными буквами и рандомным числом от 100 до 999 для регистрации
-def create_random_email():
-    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(4)))
-    random_email = f'pan19772012{random_letters}_{random.randint(100, 999)}@gmail.com'
-    return random_email
-
-
-# Генерация пароля с двумя рандомными буквами и рандомным числом от 10 до 99 для регистрации
-def create_random_password():
-    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(2)))
-    random_password = f'qwerty_{random_letters}_{random.randint(10, 99)}'
-    return random_password
-
-
-# Генерация основы email с четырьмя рандомными буквами и рандомным числом от 100 до 999
-# для негативных проверок на формат вводимого адреса почты
-def create_email_base():
-    random_letters = ''.join((random.choice(string.ascii_letters) for x in range(4)))
-    email_base = f'pan19772012{random_letters}_{random.randint(100, 999)}'
-    return email_base
+    driver.find_element(*Locators.LOGIN_EMAIL).send_keys(Credentials.email)
+    driver.find_element(*Locators.LOGIN_PASSWORD).send_keys(Credentials.password)
+    driver.find_element(*Locators.LOGIN_BUTTON).click()
